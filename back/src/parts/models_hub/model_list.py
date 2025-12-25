@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from lazyllm.module.llms.onlinemodule.supplier.aiping import AipingModule
+
 firms = {
     "SenseNova": ["llm", "embedding"],
     "Deepseek": ["llm"],
@@ -22,6 +24,7 @@ firms = {
     "Kimi": ["llm"],
     "OpenAI": ["llm", "embedding"],
     "SiliconFlow": ["llm", "embedding", "reranker", "sd", "tts", "stt", "vqa"],
+    "AIPing": ["llm", "embedding", "reranker", "vqa", "sd", "tts", "stt"],
 }
 
 # 模型类别
@@ -449,7 +452,160 @@ online_model_list = {
             {"model_name": "TeleAI/TeleSpeechASR", "support_finetune": False, "type": "STT"},
         ],
     },
+    "AIPing": {
+        "llm_list": [
+            {"model_name": "DeepSeek-Math-V2", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-0528", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-Distill-Llama-70B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-Distill-Llama-8B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-Distill-Qwen-14B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-Distill-Qwen-32B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-R1-Distill-Qwen-7B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3-0324", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3.1", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3.1-Terminus", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3.2", "support_finetune": False, "type": "LLM"},
+            {"model_name": "DeepSeek-V3.2-Exp", "support_finetune": False, "type": "LLM"},
+            {"model_name": "ERNIE-4.5-21B-A3B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "ERNIE-4.5-300B-A47B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-4-32B-0414", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-4.5", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-4.5-Air", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-4.6", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-4-9B-0414", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-Z1-32B-0414", "support_finetune": False, "type": "LLM"},
+            {"model_name": "GLM-Z1-9B-0414", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Hunyuan-A13B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Kimi-K2-0905", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Kimi-K2-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Kimi-K2-Thinking", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Ling-1T", "support_finetune": False, "type": "LLM"},
+            {"model_name": "MiniMax-M1-80k", "support_finetune": False, "type": "LLM"},
+            {"model_name": "MiniMax-M2", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen2.5-14B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen2.5-32B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen2.5-72B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen2.5-7B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen2.5-Coder-32B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-14B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-1.7B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-235B-A22B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-235B-A22B-Instruct-2507", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-235B-A22B-Thinking-2507", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-30B-A3B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-30B-A3B-Instruct-2507", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-30B-A3B-Thinking-2507", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-32B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-8B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Coder-30B-A3B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Coder-480B-A35B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Max", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Next-80B-A3B-Instruct", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Next-80B-A3B-Thinking", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Qwen3-Max", "support_finetune": False, "type": "LLM"},
+            {"model_name": "QwQ-32B", "support_finetune": False, "type": "LLM"},
+            {"model_name": "Ring-1T", "support_finetune": False, "type": "LLM"},
+        ],
+        "embedding_list": [
+            {"model_name": "Qwen3-Embedding-0.6B", "support_finetune": False, "type": "embedding"},
+            {"model_name": "Qwen3-Embedding-4B", "support_finetune": False, "type": "embedding"},
+            {"model_name": "Qwen3-Embedding-8B", "support_finetune": False, "type": "embedding"},
+            {"model_name": "text-embedding-v1", "support_finetune": False, "type": "embedding"},
+        ],
+        "reranker_list": [
+            {"model_name": "bge-reranker-v2-m3", "support_finetune": False, "type": "rerank"},
+            {"model_name": "gte-rerank", "support_finetune": False, "type": "rerank"},
+            {"model_name": "Qwen3-Reranker-0.6B", "support_finetune": False, "type": "rerank"},
+            {"model_name": "Qwen3-Reranker-8B", "support_finetune": False, "type": "rerank"},
+        ],
+        "vqa_list": [
+            {"model_name": "GLM-4.5V", "support_finetune": False, "type": "VQA"},
+            {"model_name": "GLM-4.6V", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen2.5-VL-32B-Instruct", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen2.5-VL-72B-Instruct", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen2.5-VL-7B-Instruct", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen3-VL-235B-A22B-Instruct", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen3-VL-235B-A22B-Thinking", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen3-VL-30B-A3B-Instruct", "support_finetune": False, "type": "VQA"},
+            {"model_name": "Qwen3-VL-30B-A3B-Thinking", "support_finetune": False, "type": "VQA"},
+        ],
+        "sd_list": [
+            {"model_name": "Qwen-Image", "support_finetune": False, "type": "SD"},
+            {"model_name": "HunyuanImage-3.0", "support_finetune": False, "type": "SD"},
+            {"model_name": "即梦文生图 3.0", "support_finetune": False, "type": "SD"},
+            {"model_name": "即梦文生图 3.1", "support_finetune": False, "type": "SD"},
+            {"model_name": "Doubao-Seedream-4.0", "support_finetune": False, "type": "SD"},
+            {"model_name": "Doubao-Seedream-4.5", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kolors", "support_finetune": False, "type": "SD"},
+            {"model_name": "Qwen-Image-Plus", "support_finetune": False, "type": "SD"},
+            {"model_name": "Wan2.5-T2I-Preview", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kling-V1", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kling-V1.5", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kling-V2", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kling-V2-new", "support_finetune": False, "type": "SD"},
+            {"model_name": "Kling-V2.1", "support_finetune": False, "type": "SD"},
+            {"model_name": "即梦图片生成 4.0", "support_finetune": False, "type": "SD"},
+
+        ],
+    },
 }
+
+def _update_aiping_models():
+    aiping_model_mapping = {
+        "llm": ["llm_list", "LLM"],
+        "vlm": ["vqa_list", "VQA"],
+        "embedding": ["embedding_list", "embedding"],
+        "reranker": ["reranker_list", "rerank"],
+        "text2image": ["sd_list", "SD"],
+        "tts": ["tts_list", "TTS"],
+        "stt": ["stt_list", "STT"],
+    }
+
+    try:
+        rsp = AipingModule(api_key="random_key")._get_models_list()
+
+        if (
+            rsp
+            and isinstance(rsp, dict)
+            and rsp.get("data")
+            and isinstance(rsp.get("data"), list)
+            and len(rsp.get("data")) > 0
+            and rsp.get("data")[0].get("model_type")
+        ):
+            models = rsp.get("data")
+            if not online_model_list.get("AIPing"):
+                online_model_list["AIPing"] = {}
+            aiping_data = online_model_list["AIPing"]
+
+            existing_models = {}
+            for list_key in aiping_data.keys():
+                existing_models[list_key] = {m["model_name"]: True for m in aiping_data[list_key]}
+
+            for model in models:
+                if model.get("is_foreign"):
+                    continue
+
+                model_type = model.get("model_type")
+                model_type_list = [model_type] if isinstance(model_type, str) else model_type
+                model_id = model.get("id")
+
+                for mt in model_type_list:
+                    if mt and mt in aiping_model_mapping:
+                        list_key, type_value = aiping_model_mapping[mt]
+                        if list_key not in aiping_data:
+                            aiping_data[list_key] = []
+                        if model_id not in existing_models.get(list_key, {}):
+                            aiping_data[list_key].append({
+                                "model_name": model_id,
+                                "support_finetune": False,
+                                "type": type_value,
+                            })
+    except Exception as e:
+        print(f"Failed to fetch AIPing models: {e}")
+
+_update_aiping_models()
 
 # AMS内置的模型
 ams_model_list = [
