@@ -13,8 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from lazyllm.module.llms.onlinemodule.supplier.aiping import AipingModule
-
 firms = {
     "SenseNova": ["llm", "embedding"],
     "Deepseek": ["llm"],
@@ -24,7 +22,7 @@ firms = {
     "Kimi": ["llm"],
     "OpenAI": ["llm", "embedding"],
     "SiliconFlow": ["llm", "embedding", "reranker", "sd", "tts", "stt", "vqa"],
-    "AIPing": ["llm", "embedding", "reranker", "vqa", "sd", "tts", "stt"],
+    "AIPing": ["llm", "embedding", "reranker", "vqa", "sd"],
 }
 
 # 模型类别
@@ -551,61 +549,6 @@ online_model_list = {
         ],
     },
 }
-
-def _update_aiping_models():
-    aiping_model_mapping = {
-        "llm": ["llm_list", "LLM"],
-        "vlm": ["vqa_list", "VQA"],
-        "embedding": ["embedding_list", "embedding"],
-        "reranker": ["reranker_list", "rerank"],
-        "text2image": ["sd_list", "SD"],
-        "tts": ["tts_list", "TTS"],
-        "stt": ["stt_list", "STT"],
-    }
-
-    try:
-        rsp = AipingModule(api_key="random_key")._get_models_list()
-
-        if (
-            rsp
-            and isinstance(rsp, dict)
-            and rsp.get("data")
-            and isinstance(rsp.get("data"), list)
-            and len(rsp.get("data")) > 0
-            and rsp.get("data")[0].get("model_type")
-        ):
-            models = rsp.get("data")
-            if not online_model_list.get("AIPing"):
-                online_model_list["AIPing"] = {}
-            aiping_data = online_model_list["AIPing"]
-
-            existing_models = {}
-            for list_key in aiping_data.keys():
-                existing_models[list_key] = {m["model_name"]: True for m in aiping_data[list_key]}
-
-            for model in models:
-                if model.get("is_foreign"):
-                    continue
-
-                model_type = model.get("model_type")
-                model_type_list = [model_type] if isinstance(model_type, str) else model_type
-                model_id = model.get("id")
-
-                for mt in model_type_list:
-                    if mt and mt in aiping_model_mapping:
-                        list_key, type_value = aiping_model_mapping[mt]
-                        if list_key not in aiping_data:
-                            aiping_data[list_key] = []
-                        if model_id not in existing_models.get(list_key, {}):
-                            aiping_data[list_key].append({
-                                "model_name": model_id,
-                                "support_finetune": False,
-                                "type": type_value,
-                            })
-    except Exception as e:
-        print(f"Failed to fetch AIPing models: {e}")
-
-_update_aiping_models()
 
 # AMS内置的模型
 ams_model_list = [
