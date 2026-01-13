@@ -153,6 +153,14 @@ services:
     security_opt:
       - seccomp:unconfined
     privileged: true
+    command:
+      - --name=pd
+      - --data-dir=/pd
+      - --client-urls=http://0.0.0.0:2379
+      - --peer-urls=http://0.0.0.0:2380
+      - --advertise-client-urls=http://pd:2379
+      - --advertise-peer-urls=http://pd:2380
+      - --initial-cluster=pd=http://pd:2380
     environment:
       - PD_SERVER_NAME=pd
       - INITIAL_CLUSTER=pd=http://pd:2380
@@ -179,6 +187,11 @@ services:
     security_opt:
       - seccomp:unconfined
     privileged: true
+    command:
+      - --addr=0.0.0.0:20160
+      - --advertise-addr=tikv:20160
+      - --data-dir=/tikv
+      - --pd-endpoints=pd:2379
     environment:
       - PD_ADDR=pd:2379
       - TZ=Asia/Shanghai
@@ -199,6 +212,8 @@ services:
     security_opt:
       - seccomp:unconfined
     privileged: true
+    command:
+      - host=0.0.0.0
     environment:
       - PATH="bin:$PATH"
       - MYSQL_HOST=0.0.0.0
@@ -308,9 +323,10 @@ services:
       - "${PORT:-30382}:80"  # HTTP端口（宿主机30382映射到容器80）
       - "${HTTPS_PORT:-30383}:443"  # HTTPS端口（宿主机30383映射到容器443）
   # cloud-service:
-  #   image: registry.cn-hangzhou.aliyuncs.com/lazyllm/lazyllm:0.6.2
+  #   image: registry.cn-hangzhou.aliyuncs.com/lazyllm/lazyllm:0b1a31c
   #   # lazyllm/lazyllm:0.6.2
   #   restart: always
+  #   shm_size: 2gb
   #   ports:
   #     - "31340:31340"  # 暴露 AMS 服务端口
   #     - "31341:31341"  # 暴露 FT 服务端口
@@ -321,6 +337,7 @@ services:
   #     LAZYLLM_TEMP_DIR: /mnt/lustre/share_data/temp
   #     LAZYLLM_INFER_LOG_ROOT: /mnt/lustre/share_data/logs/infer
   #     LAZYLLM_TRAIN_TARGET_ROOT: /mnt/lustre/share_data/finetune_models
+  #     VLLM_ALLOW_LONG_MAX_MODEL_LEN: "1"
   #   entrypoint: >
   #     /bin/bash -lc "
   #       source activate lazyllm &&
